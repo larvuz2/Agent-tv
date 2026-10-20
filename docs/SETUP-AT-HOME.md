@@ -8,8 +8,14 @@ talks to the TV; Claude runs on that computer.
  phone / laptop ──▶ Claude on your home computer ──Wi-Fi──▶ LG TV
 ```
 
-You need: the computer, your Claude account (the same one you use on claude.ai),
-the TV remote, and about 15 minutes.
+You need: the computer (Mac with macOS 13 or newer, or Windows 10/11), your
+Claude account on a **Pro, Max, Team or Enterprise** plan (the free plan doesn't
+include Claude Code), the TV remote, and about 15 minutes.
+
+Prefer not to use a terminal at all? The **Claude Desktop app** has a **Code** tab
+that runs Claude on your computer: download it from claude.ai, sign in, open
+**Code**, pick a folder, and ask Claude to do steps 4–5 for you. The steps
+below are the terminal way.
 
 ---
 
@@ -46,8 +52,14 @@ Paste this into Terminal and press Enter:
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-When it finishes, **close the Terminal window and open a new one** (so it finds
-the `claude` command).
+It shows no progress while downloading; wait until you get the prompt back.
+Then **close the Terminal window and open a new one**, and check it worked:
+
+```sh
+claude --version
+```
+
+You should see a version number.
 
 ---
 
@@ -70,7 +82,7 @@ claude
   1. A browser opens to **log in** with your Claude account. Approve it.
   2. Claude asks whether you **trust this folder**: choose **Yes**.
   3. Claude asks whether to use the **lg-tv MCP server** from `.mcp.json`:
-     choose to **allow/use** it.
+     approve it. (Missed it? Type `/mcp` inside Claude to approve it later.)
 
 ---
 
@@ -94,19 +106,25 @@ Now try:
 
 ## Step 6 (optional) · Control it from your phone
 
-Claude has to keep running on the home computer. In Terminal:
+Do step 5 first (so the TV tools are approved). Then quit Claude (type `/exit`)
+and, in the same Terminal:
 
 ```sh
 cd ~/Agent-tv
-claude remote-control
+claude remote-control --name "Living room TV"
 ```
 
-Leave that window open. Open the **Claude app** on your phone (or claude.ai):
-the session from your computer shows up there, and you can type requests from
-the couch.
+* The first time it asks `Enable Remote Control? (y/n)`: type `y`, Enter.
+* If it asks `Trust /Users/you/Agent-tv? [y/N]`: type `y`, Enter.
+* It prints a link. Press the **spacebar** to show a QR code you can scan with your phone.
 
-Keep the computer awake while you want phone control. On a Mac you can run
-`caffeinate -i claude remote-control` instead, which stops it sleeping.
+On your phone, open the **Claude app** › tap **Code** › pick **Living room TV**
+(computer icon, green dot = online). Type requests from the couch.
+
+Leave the Terminal window open; closing it (or `Ctrl+C`) stops phone control.
+The computer has to stay on. If it sleeps, the session reconnects when it wakes.
+On a Mac, `caffeinate -i claude remote-control --name "Living room TV"` keeps it
+awake while it runs.
 
 ---
 
@@ -118,7 +136,8 @@ Open Terminal and paste:
 cd ~/Agent-tv && claude
 ```
 
-(or `claude remote-control` for phone control). No pairing needed again.
+(or `claude remote-control --name "Living room TV"` for phone control).
+No pairing needed again.
 
 ---
 
@@ -153,6 +172,7 @@ cd ~/Agent-tv && claude
 | Problem | Fix |
 | --- | --- |
 | `command not found: claude` | Close the Terminal and open a new one. |
+| Windows: `'irm' is not recognized` | You're in Command Prompt; open **PowerShell** instead. |
 | "No LG TVs found" | TV on? Computer on the same Wi-Fi (not guest Wi-Fi, no VPN)? Tell Claude the TV's IP address. |
 | No pop-up on the TV | Ask Claude to pair again and watch the screen; it disappears after a while. |
 | Claude says the lg-tv tools aren't available | Type `/mcp` in Claude to see the server; or quit (`/exit`) and run `claude` again. |
