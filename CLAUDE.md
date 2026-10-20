@@ -12,6 +12,17 @@ it as tools.
 * If `tv_status` fails with "No TV configured", run `discover_tvs` then
   `pair_tv(host)` and tell the user to accept the prompt on the TV.
 
+## First run on a new computer
+
+* If `.venv` is missing, the `lg-tv` server can't start. Set up first:
+  macOS/Linux `sh scripts/setup.sh`; Windows: the commands in README › Windows
+  (venv + `claude mcp add lg-tv --scope local ...`).
+* After setup, the user needs to restart Claude (`/exit`, then `claude`) or
+  reconnect via `/mcp` so the tools load. Until then use the CLI:
+  `.venv/bin/agent-tv discover`, `.venv/bin/agent-tv pair <ip>`.
+* The user is not technical: give one action at a time, and tell them exactly
+  when to look at the TV and press Accept.
+
 ## How to drive it
 
 * Start with `tv_status` to see power, current app, volume, playback state.

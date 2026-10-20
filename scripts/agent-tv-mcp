@@ -2,9 +2,9 @@
 # Launch the agent-tv MCP server (stdio) from this repo's virtualenv.
 # Used by .mcp.json; safe to run by hand for debugging.
 DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-if [ -x "$DIR/.venv/bin/python" ]; then
-  exec "$DIR/.venv/bin/python" -m agent_tv.mcp_server "$@"
-fi
+for PY in "$DIR/.venv/bin/python" "$DIR/.venv/Scripts/python.exe"; do
+  [ -x "$PY" ] && exec "$PY" -m agent_tv.mcp_server "$@"
+done
 if command -v python3 >/dev/null 2>&1 && PYTHONPATH="$DIR/src" python3 -c "import websockets, mcp" 2>/dev/null; then
   PYTHONPATH="$DIR/src" exec python3 -m agent_tv.mcp_server "$@"
 fi

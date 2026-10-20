@@ -28,9 +28,13 @@ Names move around between model years; search the TV's settings if needed.
 
 ## 2. Install and pair (on the home computer)
 
+New to terminals? Follow **[docs/SETUP-AT-HOME.md](docs/SETUP-AT-HOME.md)**, a
+click-by-click guide.
+
 ```sh
-git clone <this repo> agent-tv && cd agent-tv
-sh scripts/setup.sh                    # creates .venv and installs everything
+git clone -b claude/keen-brahmagupta-37rgd5 https://github.com/larvuz2/Agent-tv.git ~/Agent-tv
+cd ~/Agent-tv
+sh scripts/setup.sh                    # creates .venv (fetches Python 3.12 if needed) and installs everything
 .venv/bin/agent-tv discover            # finds the TV (SSDP, then a port scan)
 .venv/bin/agent-tv pair 192.168.1.50   # accept the prompt on the TV with the remote
 .venv/bin/agent-tv status              # power, app, volume, what's playing
@@ -70,6 +74,22 @@ it can reach the TV.
 Or register it for every Claude Code project:
 `claude mcp add lg-tv --scope user -- /absolute/path/to/agent-tv/scripts/agent-tv-mcp`.
 (Windows: use `.venv\Scripts\agent-tv-mcp.exe` as the command.)
+
+### Windows
+
+`scripts/setup.sh` and the project `.mcp.json` assume a Unix shell. On Windows
+(PowerShell, with Python 3.10+ and Git installed), in the repo folder:
+
+```powershell
+py -3 -m venv .venv                         # or: python -m venv .venv
+.venv\Scripts\python -m pip install -e ".[dev]"
+claude mcp add lg-tv --scope local -- "$PWD\.venv\Scripts\agent-tv-mcp.exe"
+.venv\Scripts\agent-tv discover
+.venv\Scripts\agent-tv pair <TV-IP>
+```
+
+The `--scope local` entry is private to you and this folder, and it takes
+precedence over the `lg-tv` entry in `.mcp.json`.
 
 ### MCP tools
 
