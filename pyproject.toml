@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-tv"
+version = "0.1.0"
+description = "Local-network control of LG webOS TVs (SSAP over WebSocket): Python driver, CLI and MCP server for Claude."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "websockets>=13",
+  "mcp>=1.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+agent-tv = "agent_tv.cli:main"
+agent-tv-mcp = "agent_tv.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "lg-tv": {
+      "type": "stdio",
+      "command": "sh",
+      "args": [
+        "-c",
+        "d=\"$CLAUDE_PROJECT_DIR\"; [ -n \"$d\" ] || d=.; exec \"$d/scripts/agent-tv-mcp\""
+      ]
+    }
+  }
+}

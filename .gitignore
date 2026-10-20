@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.pytest_cache/
+
+# Local TV pairing data lives in ~/.config/agent-tv, but never commit it if copied here
+config.json
+*.client-key
+tv-screenshot*.jpg
+.env
